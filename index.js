@@ -85,16 +85,27 @@ function Car(model, milesPerGallon) {
   this.tank = 0;
   this.odometer = 0;
 
-  Car.prototype.fill = function(gallons){
-    return this.tank + gallons;
-  }
-
-
-
-
 }
 
+Car.prototype.fill = function(gallons){
+  this.tank += gallons;
+}
 
+Car.prototype.drive = function(distance) {
+  if (distance > this.tank * this.milesPerGallon) {
+    this.odometer = this.tank * this.milesPerGallon;
+    this.tank = 0;
+    return `ran out of fuel at ${this.odometer}I `;
+  } else {
+    this.odometer += distance;
+    this.tank -= distance / this.milesPerGallon;
+  }
+};
+
+
+
+
+Baby.prototype = Object.create(Person.prototype);
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
@@ -103,16 +114,15 @@ function Car(model, milesPerGallon) {
         + Should return a string "Playing with x", x being the favorite toy.
 */
 function Baby(name, age, favoriteToy) {
-  this.name = name;
-  this.age = age;
-  this.favoriteToy = favoriteToy;
   Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
 
-  Baby.prototype.play = function(){
-    return `Playing with ${this.favoriteToy}`;
-  }
+
 };
 
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
 const babyOne = new Baby('Jonathan', 2, 'Rattle');
 
 
